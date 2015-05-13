@@ -4,14 +4,14 @@
     "parameters" : {
         "adminUserName": {
             "type": "string",
-            "defaultValue": "testuser",
+            "defaultValue": "thomas",
             "metadata": {
                 "Description": "Admin user name for the Virtual Machines"
             }
         },
         "adminPassword": {
             "type": "securestring",
-            "defaultValue": "Eur32#1e",
+            "defaultValue": "User@123",
             "metadata": {
                 "Description": "Admin password for the Virtual Machines"
             }
@@ -43,101 +43,101 @@
                 "Description": "The type of the Storage Account to be created (Default to Standard_LRS)"
             }
         },
-        "virtualNetworkName": { 
-            "type": "string", 
-            "defaultValue": "clouderaVnet", 
-            "metadata": { 
-                "Description": "The name of the virtual network provisioned for the deployment" 
-            } 
-        }, 
-        "subnetName": { 
-            "type": "string", 
-            "defaultValue": "clouderaSubnet", 
-            "metadata": { 
-                "Description": "Subnet name for the virtual network where resources will be provisioned" 
-            } 
+        "virtualNetworkName": {
+            "type": "string",
+            "defaultValue": "clouderaVnet",
+            "metadata": {
+                "Description": "The name of the virtual network provisioned for the deployment"
+            }
         },
-        "addressPrefix": { 
-            "type": "string", 
-            "defaultValue": "10.0.0.0/24", 
-            "metadata": { 
-                "Description": "The network address space for the virtual network" 
-            } 
-        }, 
-        "subnetPrefix": { 
-            "type": "string", 
-            "defaultValue": "10.0.0.0/24", 
-            "metadata": { 
-                "Description": "The network address space for the virtual subnet" 
-            } 
-        }, 
-        "nodeAddressPrefix": { 
-            "type": "string", 
+        "subnetName": {
+            "type": "string",
+            "defaultValue": "clouderaSubnet",
+            "metadata": {
+                "Description": "Subnet name for the virtual network where resources will be provisioned"
+            }
+        },
+        "addressPrefix": {
+            "type": "string",
+            "defaultValue": "10.0.0.0/24",
+            "metadata": {
+                "Description": "The network address space for the virtual network"
+            }
+        },
+        "subnetPrefix": {
+            "type": "string",
+            "defaultValue": "10.0.0.0/24",
+            "metadata": {
+                "Description": "The network address space for the virtual subnet"
+            }
+        },
+        "nodeAddressPrefix": {
+            "type": "string",
             "defaultValue": "10.0.0.",
-            "metadata": { 
-                "Description": "The IP address prefix that will be used for constructing private IP address for each node in the cluster" 
-            } 
-        }, 
-        "tshirtSize": { 
-            "type": "string", 
-            "defaultValue": "Eval", 
-            "allowedValues": [ 
+            "metadata": {
+                "Description": "The IP address prefix that will be used for constructing private IP address for each node in the cluster"
+            }
+        },
+        "tshirtSize": {
+            "type": "string",
+            "defaultValue": "Eval",
+            "allowedValues": [
                 "Eval",
-                "Small", 
+                "Small",
                 "Medium"
-            ], 
-            "metadata": { 
-                "Description": "T-shirt size of the Cloudera cluster (Eval, Small, Medium)" 
-            } 
-        }, 
+            ],
+            "metadata": {
+                "Description": "T-shirt size of the Cloudera cluster (Eval, Small, Medium)"
+            }
+        },
         "vmSize": {
             "type": "string",
-            "defaultValue": "Standard_D14",
-            "metadata": { 
-                "Description": "The size of the VMs deployed in the cluster (Defaults to Standard_D14)" 
-            } 
+            "defaultValue": "Standard_D13",
+            "metadata": {
+                "Description": "The size of the VMs deployed in the cluster (Defaults to Standard_D13)"
+            }
         },
         "keyVaultResourceGroup": {
             "type": "string",
-            "defaultValue": "AzureRM-Util",
-            "metadata": { 
-                "Description": "The resource group containing the key vault which provides the private key used for SSH login.  See the readme for details." 
-            } 
+            "defaultValue": "thomaskeyGroup6",
+            "metadata": {
+                "Description": "The resource group containing the key vault which provides the private key used for SSH login.  See the readme for details."
+            }
         },
         "keyVaultName": {
             "type": "string",
-            "defaultValue": "AzureRM-Keys",
-            "metadata": { 
-                "Description": "The name of the key vault which provides the private key  used for SSH login.  See the readme for details." 
-            } 
+            "defaultValue": "thomascrpKeyVault6",
+            "metadata": {
+                "Description": "The name of the key vault which provides the private key  used for SSH login.  See the readme for details."
+            }
         },
         "keyUri": {
             "type": "string",
-            "defaultValue": "https://azurerm-keys.vault.azure.net/secrets/sshKey/29a10ecf43b64c7ab7eace8866d64597",
-            "metadata": { 
-                "Description": "The url of the private key used for SSH login.  See the readme for details." 
-            } 
+            "defaultValue": "https://thomascrpkeyvault6.vault.azure.net/secrets/thomascrpKey6/8178fea768dd4e168487725606e9c6ab",
+            "metadata": {
+                "Description": "The url of the private key used for SSH login.  See the readme for details."
+            }
         }
     },
-    "variables": {      
-        "scriptsUri":"https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/cloudera-on-centos",
+    "variables": {
+        "scriptsUri":"https://raw.githubusercontent.com/ShanghaiTeam/azure-quickstart-templates/master/cloudera-on-centos",
         "storageAccount": {
             "prefix": "[parameters('storageAccountPrefix')]",
             "type": "[parameters('storageAccountType')]"
         },
         "clusterTshirtSizeEval": {
             "nameNodeCount": 2,
-            "dataNodeCount": 3                
+            "dataNodeCount": 3
         },
         "clusterTshirtSizeSmall": {
             "nameNodeCount": 2,
-            "dataNodeCount": 7            
+            "dataNodeCount": 7
         },
         "clusterTshirtSizeMedium": {
             "nameNodeCount": 2,
-            "dataNodeCount": 50            
+            "dataNodeCount": 50
         },
-        "clusterSpec": "[variables(concat('clusterTshirtSize', parameters('tshirtSize')))]",        
+        "clusterSpec": "[variables(concat('clusterTshirtSize', parameters('tshirtSize')))]",
         "vmSpec": {
             "vmSize": "[parameters('vmSize')]",
             "privateIPAddressPrefix": "[parameters('nodeAddressPrefix')]",
@@ -145,13 +145,13 @@
             "adminPassword": "[parameters('adminPassword')]",
             "sourceImageName": "[concat('/',subscription().subscriptionId,'/services/images/5112500ae3b842c8b9c604889f8753c3__OpenLogic-CentOS-65-20150128')]",
             "keyVaultResourceId": "[resourceId(parameters('keyVaultResourceGroup'), 'Microsoft.KeyVault/vaults', parameters('keyVaultName'))]",
-            "keyUri": "[parameters('keyUri')]",            
+            "keyUri": "[parameters('keyUri')]",
             "masterNodeASName": "[concat(parameters('dnsNamePrefix'), '-mnAS')]",
-            "dataNodeASName": "[concat(parameters('dnsNamePrefix'), '-dnAS')]"            
+            "dataNodeASName": "[concat(parameters('dnsNamePrefix'), '-dnAS')]"
         },
         "networkSpec": {
             "addressPrefix": "[parameters('addressPrefix')]",
-            "subnetPrefix": "[parameters('subnetPrefix')]",            
+            "subnetPrefix": "[parameters('subnetPrefix')]",
             "privateIPPrefix": "[parameters('nodeAddressPrefix')]",
             "masterNodeAddress": 9,
             "nameNodeAddressStart": 10,
@@ -183,7 +183,7 @@
                     },
                     "dataNodeASName": {
                         "value": "[variables('vmSpec').dataNodeASName]"
-                    }   
+                    }
                 }
             }
         },
@@ -191,7 +191,7 @@
             "name": "name-node",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2015-01-01",
-            "dependsOn": [                
+            "dependsOn": [
                 "Microsoft.Resources/deployments/shared-resources"
             ],
             "properties": {
@@ -211,7 +211,7 @@
                         "value": "[variables('scriptsUri')]"
                     },
                     "storageAccount" : {
-                        "value": "[variables('storageAccount')]"        
+                        "value": "[variables('storageAccount')]"
                     },
                     "vmCount": {
                         "value": "[variables('clusterSpec').nameNodeCount]"
@@ -221,7 +221,7 @@
                     },
                     "networkSpec": {
                         "value": "[variables('networkSpec')]"
-                    }      
+                    }
                 }
             }
         },
@@ -229,7 +229,7 @@
             "name": "data-node",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2015-01-01",
-            "dependsOn": [                
+            "dependsOn": [
                 "Microsoft.Resources/deployments/shared-resources"
             ],
             "properties": {
@@ -249,7 +249,7 @@
                         "value": "[variables('scriptsUri')]"
                     },
                     "storageAccount" : {
-                        "value": "[variables('storageAccount')]"        
+                        "value": "[variables('storageAccount')]"
                     },
                     "vmCount": {
                         "value": "[variables('clusterSpec').dataNodeCount]"
@@ -259,7 +259,7 @@
                     },
                     "networkSpec": {
                         "value": "[variables('networkSpec')]"
-                    }                    
+                    }
                 }
             }
         },
@@ -267,7 +267,7 @@
             "name": "master-node",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2015-01-01",
-            "dependsOn": [                                
+            "dependsOn": [
                 "Microsoft.Resources/deployments/data-node",
                 "Microsoft.Resources/deployments/name-node"
             ],
@@ -288,7 +288,7 @@
                         "value": "[variables('scriptsUri')]"
                     },
                     "storageAccount" : {
-                        "value": "[variables('storageAccount')]"        
+                        "value": "[variables('storageAccount')]"
                     },
                     "vmSpec": {
                         "value": "[variables('vmSpec')]"
@@ -298,7 +298,7 @@
                     },
                     "clusterSpec" : {
                         "value": "[variables('clusterSpec')]"
-                    }            
+                    }
                 }
             }
         }
